@@ -1,0 +1,85 @@
+{% extends 'myweb/baseinfo.html' %}
+
+	{% block mainbody %}
+	<div class="total_count">全部商品<em>{{ request.session.shoplist|length }}</em>件</div>
+	<ul class="cart_list_th clearfix">
+		<li class="col01">商品名称</li>
+		<li class="col02">商品单位</li>
+		<li class="col03">商品价格</li>
+		<li class="col04">数量</li>
+		<li class="col05">小计</li>
+		<li class="col06">操作</li>
+	</ul>
+        {% for var in request.session.shoplist.values %}
+	<ul class="cart_list_td clearfix">
+{#         在checkbox选项框中，隐藏小计#}
+		<li class="col01"><input type="checkbox" class="shop-item" ids = "{{ var.id }}" total="{% widthratio var.price 1 var.m %}"></li>
+		<li class="col02"><img src="/static/myadmin/goods/s_{{var.picname  }}"></li>
+		<li class="col03">{{var.goods  }}<br><span>{{ var.price }}</span><em>/500g</em></li>
+		<li class="col04">500g</li>
+		<li class="col05">{{ var.price }}</li>
+		<li class="col06">
+			<div class="num_add">
+                <button class="add fl" onclick="window.location='{% url 'myweb:cart_change' %}?gid={{ var.id }}&num={{ var.m|add:-1 }}'">-</button>
+{#				<a href="javascript:add1();" class="add fl">+</a>#}
+				<input type="text" onblur="window.location='{% url 'myweb:cart_change' %}?gid={{ var.id }}&num='+this.value"class="num_show fl" id='num' name= 'm' value="{{ var.m }}">
+				 <button class="minus fl" onclick="window.location='{% url 'myweb:cart_change' %}?gid={{ var.id }}&num={{ var.m|add:1 }}'">+</button>
+{#                <a href="javascript:sub1();" class="minus fl">-</a>#}
+			</div>
+		</li>
+{#        小计用widthratio计算#}
+		<li class="col07">{% widthratio var.price 1 var.m %}</li>
+		<li class="col08"><a href="{% url 'myweb:cart_del' %}?gid={{ var.id }}">删除</a></li>
+	</ul>
+        {% endfor %}
+	<ul class="settlements">
+		<li class="col01"><input type="checkbox" id="all" name="" ></li>
+		<li class="col02" >全选</li>
+		<li class="col03">合计(不含运费)：<span>￥</span><span class="mytotal"><em>0</em></span><br>共计<span class="cartcount">0</span>件商品</li>
+{#		<li class="col04"><a href="{% url 'myweb:order_add'  %}?gid={{ var.id }}">去结算</a></li>#}
+	     <li class="col04"><button type='submit' onclick="window.location='/ordersadd/?gids='+loadTotal().join(',')">去结算</button>
+    </ul>
+{% endblock mainbody%}
+        {% block js %}
+        <script>
+{#       jquery的入口 $(function(){})#}
+         $(function(){
+            // 获取到选择框是否被选择中
+             $('#all').click(function(){
+                  //1、获取属性值1.
+                //a=$(this).attr('checked')
+                 //$('.shop-item').attr('checked',a)
+                 //2、prop专门获取选中值，选择返回true,未选择返回false
+                 b=$(this).prop('checked');
+                 $('.shop-item').prop('checked',b);
+                 loadTotal()
+             });
+             $('.cart_list_td li input:checkbox').click(function () {
+                 loadTotal()
+             });
+         });
+        //统计总计金额函数
+        function loadTotal(){
+           // 获取清单中所有选择的选择框结点，用冒号表示筛选条件
+           list= $('.shop-item:checked');
+            //用length计算出选中的个数
+            count=list.length;
+            $('.cartcount').html(count);
+            //计算总金额
+            var total=0;
+            ids=[];
+            //遍历累加总金额
+            list.each(function() {
+                total += parseFloat($(this).attr('total'));
+                ids.push($(this).attr('ids'))
+            });
+                //console.log($(this).attr('name'))
+             $('.mytotal').html(total);
+            return ids;
+        }
+
+
+        </script>
+{% endblock js %}
+
+	

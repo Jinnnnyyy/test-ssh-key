@@ -1,0 +1,97 @@
+{% extends 'myadmin/base_header.html' %}
+{% block body %}
+<div class="span9">
+					<h1>
+						会员信息
+					</h1>
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>
+									编号
+								</th>
+								<th>
+									姓名
+								</th>
+								<th>
+									邮箱
+								</th>
+								<th>
+									电话
+								</th>
+								<th>
+									身份
+								</th>
+								<th>
+									操作
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+                         {% for var in user %}
+							<tr>
+								<td>
+									{{ var.id }}
+								</td>
+								<td>
+									{{ var.uname }}
+								</td>
+								<td>
+									<span class="badge">{{ var.uemail }}</span>
+								</td>
+								<td>
+									<span class="badge">{{ var.uphone }}</span>
+								</td>
+								<td>
+                                    {% if var.uid == 1 %}
+									<span class="badge">用户</span>
+                                    {% elif var.uid == 2 %}
+                                    <span class="badge">管理员</span>
+                                    {% endif %}
+
+								</td>
+								<td>
+									<div class="progress">
+                                        <a href="{% url  'myadmin:admin_update_user' var.id  %}">修改 |</a> <a href="/myadmin/del_user/{{ var.id }}">删除</a>
+									</div>
+								</td>
+							</tr>
+                        {% endfor %}
+						</tbody>
+					</table>
+{#					<a class="toggle-link" href="#new-project"><i class="icon-plus"></i> 添加新会员</a>#}
+					<form id="new-project" class="form-horizontal hidden" action="/myadmin/add_user/" method="post">
+						{% csrf_token %}
+                        <fieldset>
+							<legend>新会员信息</legend>
+							<div class="control-group">
+								<label class="control-label" for="input01">姓名</label>
+								<div class="controls">
+									<input type="text" class="input-xlarge" id="input01" name="uname" />
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="select01">邮箱</label>
+								<div class="controls">
+                                    <input type="text" class="input-xlarge" id="input02" name="uemail" />
+                                </div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="textarea">电话</label>
+								<div class="controls">
+									<input type="text" class="input-xlarge" id="input03" name="uphone" />
+								</div>
+							</div>
+                            <div class="control-group">
+								<label class="control-label" for="textarea">身份</label>
+								<div class="controls">
+									<input type="text" class="input-xlarge" id="input03" name="uid" />
+								</div>
+							</div>
+							<div class="form-actions">
+								<button type="submit" class="btn btn-primary">确认</button> <button class="btn">取消</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+{% endblock body %}

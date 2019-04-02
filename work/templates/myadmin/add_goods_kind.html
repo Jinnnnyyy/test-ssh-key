@@ -1,0 +1,28 @@
+{% extends 'myadmin/base_header.html' %}
+{% block body %}
+				<form id="new-project" class="form-horizontal " action="{% url 'myadmin:admin_goods_kind_insert'  %}" method="post">
+						{% csrf_token %}
+                         <input type="hidden" name="pid" value="{{ pid }}"/>
+                         <input type="hidden" name="path" value="{{ path }}"/>
+                        <fieldset>
+							<legend>新类别信息</legend>
+							<div class="control-group">
+								<label class="control-label" for="input01">父类别</label>
+								<div class="controls">
+									<input type="text" class="input-xlarge" id="input01" name="pname"  value="{{ pname }}"/>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="select01">类别名称</label>
+								<div class="controls">
+                                    <input type="text" class="input-xlarge" id="input02" name="name" />
+                                </div>
+							</div>
+
+							<div class="form-actions">
+								<button type="submit" class="btn btn-primary">确认</button> <button class="btn">取消</button>
+							</div>
+						</fieldset>
+					</form>
+
+{% endblock body %}

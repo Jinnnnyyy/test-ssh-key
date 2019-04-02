@@ -1,0 +1,62 @@
+{% extends 'myadmin/base_header.html' %}
+{% block body %}
+<div class="span9">
+					<h1>
+						商品类别信息
+					</h1>
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>
+									编号
+								</th>
+								<th>
+									类别名称
+								</th>
+								<th>
+									上级编号
+								</th>
+								<th>
+									路径
+								</th>
+								<th>
+									操作
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+                           {% for var in kind %}
+                               <tr>
+                                   <td>{{ var.id }}</td>
+                                   <td>{{ var.name }}</td>
+                                   <td>{{ var.pid }}</td>
+                                   <td>{{ var.path }}</td>
+                                   <td>
+                                       <a href="{% url 'myadmin:admin_add_goods_kind' var.id%}">添加子类别</a>
+                                       <a href="{% url 'myadmin:admin_goods_kind_edit' var.id %}">修改</a>
+                                       <a href="{% url 'myadmin:admin_goods_kind_del' var.id %}">删除</a>
+                                   </td>
+                               </tr>
+                           {% endfor %}
+
+						</tbody>
+					</table>				
+					<div class="pagination" style="text-align: center">
+						<ul>
+							<li class="disabled" >
+                                <a onclick="window.location='{% url 'myadmin:admin_scan_goods_kind' pindex|add:-1 %}'">&laquo;</a>
+{#								<a onclick="window.loaction='{% url 'myadmin:admin_scan_goods_kind' pindex|add:-1 %}'">&laquo;</a>#}
+							</li>
+                           {% for p in plist %}
+							<li class="active">
+								<a href="{% url 'myadmin:admin_scan_goods_kind' p %}">{{ p }}</a>
+							</li>
+                            {% endfor %}
+							<li>
+							<a onclick="window.location='{% url 'myadmin:admin_scan_goods_kind' pindex|add:1 %}'">&raquo;</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+{% endblock body %}
+

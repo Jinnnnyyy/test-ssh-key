@@ -1,0 +1,43 @@
+{% extends 'myadmin/base_header.html' %}
+{% block body %}
+				<form id="new-project" class="form-horizontal " action="/myadmin/add_user/" method="post">
+						{% csrf_token %}
+                        <fieldset>
+							<legend>新会员信息</legend>
+							<div class="control-group">
+								<label class="control-label" for="input01">姓名</label>
+								<div class="controls">
+									<input type="text" class="input-xlarge" id="input01" name="uname" />
+								</div>
+							</div>
+                            <div class="control-group">
+								<label class="control-label" for="input01">密码</label>
+								<div class="controls">
+									<input type="text" class="input-xlarge" id="input01" name="upwd" />
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="select01">邮箱</label>
+								<div class="controls">
+                                    <input type="text" class="input-xlarge" id="input02" name="uemail" />
+                                </div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="textarea">电话</label>
+								<div class="controls">
+									<input type="text" class="input-xlarge" id="input03" name="uphone" />
+								</div>
+							</div>
+                            <div class="control-group">
+								<label class="control-label" for="textarea">身份</label>
+								<div class="controls">
+									<input type="text" class="input-xlarge" id="input03" name="uid" />
+								</div>
+							</div>
+							<div class="form-actions">
+								<button type="submit" class="btn btn-primary">确认</button> <button class="btn">取消</button>
+							</div>
+						</fieldset>
+					</form>
+
+{% endblock body %}

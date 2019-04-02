@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html lang="en" class="ie6 ielt7 ielt8 ielt9"><![endif]--><!--[if IE 7 ]><html lang="en" class="ie7 ielt8 ielt9"><![endif]--><!--[if IE 8 ]><html lang="en" class="ie8 ielt9"><![endif]--><!--[if IE 9 ]><html lang="en" class="ie9"> <![endif]--><!--[if (gt IE 9)|!(IE)]><!--> 
+<html lang="en"><!--<![endif]--> 
+	<head>
+		<meta charset="utf-8">
+		<title>登录</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="/static/myadmin/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/static/myadmin/css/bootstrap-responsive.min.css" rel="stylesheet">
+		<link href="/static/myadmin/css/site.css" rel="stylesheet">
+		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	</head>
+	<body>
+		<div id="login-page" class="container" style="width:27%">
+			<h3 style="text-align: center">管理员登录-测试账号：janny+12345678Aa</h3>
+            {{ info }}
+            <form id="login-form" class="well" action="{% url 'myadmin:admin_dolog' %}" method="post">
+                 {% csrf_token %}
+                用户名：  <input type="text" class="span2"  name='name' placeholder="用户名" /><br />
+                密&nbsp;&nbsp;&nbsp;&nbsp;码： <input type="password" class="span2" name='pwd'placeholder="密码" /><br />
+                验证码：<input type="password" class="span2" name='verifycode' placeholder="验证码" /><br>
+                <img id='verifycode' src="{% url 'myadmin:admin_verify' %}" alt="CheckCode"/>
+{#                <img id='verifycode' src="{% url 'myadmin:admin_verify' 1 %}" alt="CheckCode"/>#}
+                <span id='verifycodeChange'>看不清，换一个</span>
+                <br />
+                <label class="checkbox"> <input type="checkbox" /> 记住密码 </label>
+                <button type="submit" class="btn btn-primary" style="margin-left: 30px">登录</button>
+                <button type="submit" class="btn" style="margin-left: 50px">忘记密码</button>
+		    </form>
+		</div>
+		<script src="/static/myadmin/js/jquery.min.js"></script>
+		<script src="/static/myadmin/js/bootstrap.min.js"></script>
+		<script src="/static/myadmin/js/site.js"></script>
+        <script type="text/javascript" src="/static/myadmin/js/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(function(){
+                $('#verifycodeChange').css('cursor','pointer').click(function() {
+                    num=Math.floor(Math.random()*5+1)
+                    $('#verifycode').attr('src',$('#verifycode').attr('src')+num)
+                });
+            });
+        </script>
+{#        <img id='verifycode' src="{% url 'myadmin:admin_verify' 1 %}" alt="CheckCode"/>#}
+{#        <span id='verifycodeChange'>看不清，换一个</span>#}
+	</body>
+</html>

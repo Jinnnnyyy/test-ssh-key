@@ -1,0 +1,47 @@
+{% extends 'myadmin/base_header.html' %}
+{% block body %}
+				<div class="span9">
+					  <div >
+                        <h3 >全部订单</h3>
+                        {% for ors in detaillist %}
+                                <ul class="order_list_th w978 clearfix">
+                                    <li class="col01">{{ ors.odate }}</li>
+                                    <li class="col02">订单号：<span>{{ ors.oid }}</span></li>
+                                    <li class="col02 stress">未支付</li>
+                                </ul>
+
+                                <table class="order_list_table w980">
+                                     <tbody>
+                                            <tr>
+                                                <td width="80%">
+                                                {% for gd in ors.goodinfo %}
+                                                    <ul class="order_goods_list clearfix">
+                                                        <li class="col01"><img src="/static/myadmin/goods/s_{{ gd.picname }}"></li>
+                                                        <li class="col02"><span>{{ gd.goods }}</span><em><span>{{ gd.price }}</span></em></li>
+                                                        <li class="col03">{{ gd.price }}</li>
+                                                        <li class="col04">{{ gd.count }}</li>
+                                                    </ul>
+
+                                                {% endfor %}
+                                                </td>
+                                                <td width="20%">{{ors.ptotal  }}</td>
+                                            </tr>
+                                     </tbody>
+                                 </table>
+
+                         {% endfor %}
+
+                    <div class="pagenation">
+                        <a href="#"><上一页</a>
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                        <a href="#">5</a>
+                        <a href="#">下一页></a>
+                    </div>
+            </div>
+      </div>
+					
+				</div>
+{% endblock body %}
