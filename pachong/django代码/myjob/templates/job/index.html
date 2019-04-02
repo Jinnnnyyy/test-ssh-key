@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>职位展示</title>
+</head>
+<body>
+    <h2 align="center">
+		职位展示
+	</h2>
+    <h3 align="right">共{{ allpage }}页，当前是第{{ pIndex }}页</h3>
+
+	<table>
+		<thead>
+			<tr>
+				<th width="50px">id</th>
+				<th width="50px">城市</th>
+				<th width="70px">区域</th>
+				<th width="300px">职位名称</th>
+				<th>公司名称</th>
+				<th>学历要求</th>
+				<th>工作经验</th>
+				<th width="100px">薪水</th>
+				<th width="500px">福利待遇</th>
+				<th width="100px">链接</th>
+				<th>创建时间</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for vo in lists %}
+			<tr>
+				<td width="50px">{{ vo.id }}</td>
+				<td width="50px">{{ vo.city }}</td>
+				<td width="70px">{{ vo.address }}</td>
+				<td width="300px">{{ vo.jobname }}</td>
+				<td>{{ vo.company }}</td>
+				<td>{{ vo.education }}</td>
+				<td>{{ vo.workyear }}</td>
+				<td width="100px">{{ vo.salary }}</td>
+				<td width="500px">{{ vo.welfare }}</td>
+				<td width="100px"><a target='_blank' href="{{ vo.link }}">查看详情</a></td>
+				<td>{{ vo.createtime }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<div align="center">
+		<a href="{% url "index" pIndex|add:-1 %}">上一页</a>
+		<a href="{% url "index" pIndex|add:1 %}">下一页</a>
+	</div>
+</body>
+</html>
